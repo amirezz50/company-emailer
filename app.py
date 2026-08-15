@@ -87,50 +87,9 @@ if app_password and not st.session_state.authed:
     st.stop()
 
 st.title("إرسال إيميلات للشركات")
-st.caption("ارفع الإكسيل، حدّد الصفوف، حط التمبلت، والإيميل يتبعت واحد واحد من غير ما يعدّي حد.")
-
-with st.expander("تشغيل من الموبايل"):
-    st.markdown(
-        """
-على الكمبيوتر:
-
-`pip install -r requirements.txt` ثم `streamlit run app.py`
-
-من الموبايل على نفس الواي فاي: `http://IP-الكمبيوتر:8501`
-
-أو ارفع المشروع على GitHub وبعدين Deploy مجاني من [Streamlit Cloud](https://share.streamlit.io)
-        """
-    )
-
-with st.expander("لو الرسالة بتروح Spam"):
-    st.markdown(
-        """
-جيميل الشخصي ده السبب الأشيع: فلتر جوجل شايف الرسالة حملة جماعية من حساب عادي.
-
-قلّل Spam كده:
-- خلّي كل إيميل شخصي: `{{name}}` و `{{company}}` مش نفس النص للكل
-- ابعت أعداد صغيرة، وخلّي فاصل أكبر بين الرسائل
-- متنفعش عناوين فيها عروض/مجاني/!!! وخلّي HTML مقفول
-- اطلب من المستقبل يضغط **Not spam / ليست رسائل مزعجة** أول مرة
-
-الأفضل مجانًا: حساب [Brevo](https://www.brevo.com) (حوالي 300 إيميل/يوم) ودومين لو عندك.
-        """
-    )
-
-with st.expander("طريقة Gmail المجانية", expanded=False):
-    st.markdown(
-        """
-1. فعّل التحقق بخطوتين على حساب جوجل.
-2. من [App Passwords](https://myaccount.google.com/apppasswords) أنشئ كلمة مرور للتطبيق.
-3. استخدم الإيميل + كلمة المرور دي هنا (مش كلمة سر جيميل العادية).
-4. جيميل عادةً يسمح بحوالي 100 رسالة في اليوم على الحساب الشخصي.
-        """
-    )
 
 st.header("1) حساب الإرسال")
 provider = st.selectbox("مزود الإيميل", list(PROVIDERS.keys()))
-if str(provider).startswith("Gmail"):
-    st.warning("من جيميل الشخصي الإيميلات الجماعية غالبًا بتدخل Spam. الإرسال شغال، والفلتر هو المشكلة.")
 preset = PROVIDERS[provider]
 smtp_host = st.text_input("سيرفر SMTP", value=preset["host"] or "smtp.gmail.com")
 conn_mode = st.radio(
