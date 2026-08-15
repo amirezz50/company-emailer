@@ -55,8 +55,6 @@ if "templates" not in st.session_state:
     ]
 if "sending" not in st.session_state:
     st.session_state.sending = False
-if "authed" not in st.session_state:
-    st.session_state.authed = False
 
 
 def current_template() -> dict:
@@ -67,24 +65,6 @@ def current_template() -> dict:
             return item
     return st.session_state.templates[0]
 
-
-app_password = ""
-try:
-    app_password = str(st.secrets.get("APP_PASSWORD", "")).strip()
-except Exception:
-    app_password = ""
-
-if app_password and not st.session_state.authed:
-    st.title("إرسال إيميلات للشركات")
-    st.caption("التطبيق محمي بكلمة سر لأنه منشور على الإنترنت.")
-    entered = st.text_input("كلمة دخول التطبيق", type="password")
-    if st.button("دخول", type="primary"):
-        if entered == app_password:
-            st.session_state.authed = True
-            st.rerun()
-        else:
-            st.error("كلمة السر غلط.")
-    st.stop()
 
 st.title("إرسال إيميلات للشركات")
 
